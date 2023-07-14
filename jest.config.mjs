@@ -13,7 +13,7 @@ const config = {
 
   testEnvironment: 'jest-environment-jsdom',
   moduleNameMapper: {
-    '^@/components/(.*)$': '<rootDir>/components/$1',
+    '^@/lib/(.*)$': '<rootDir>/src/lib/$1',
   },
 };
 

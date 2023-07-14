@@ -9,7 +9,10 @@
     "lint": "next lint",
     "test:watch": "jest --watch",
     "test": "jest",
-    "format": "prettier -u -w --ignore-path .gitignore \"*.{ts,tsx,js,mjs,css,html}\""
+    "format": "prettier -u -w --ignore-path .gitignore \"**/*.{ts,tsx,js,mjs,css,html}\""
+  },
+  "prisma": {
+    "seed": "ts-node -P tsconfig-seed.json -r tsconfig-paths/register --transpileOnly prisma/seed.ts"
   },
   "dependencies": {
     "@prisma/client": "^5.0.0",
@@ -36,11 +39,16 @@
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^14.0.0",
+    "@types/bcrypt": "^5.0.0",
+    "@types/jest": "^29.5.3",
     "eslint-config-prettier": "^8.8.0",
     "jest": "^29.6.1",
     "jest-environment-jsdom": "^29.6.1",
     "prisma": "^5.0.0",
     "ts-node": "^10.9.1",
     "tsconfig-paths": "^4.2.0"
+  },
+  "volta": {
+    "node": "18.16.1"
   }
 }

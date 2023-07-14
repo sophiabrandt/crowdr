@@ -14,6 +14,7 @@ Ensure that you have the following installed on your local development machine:
 
 - [Node.js](https://nodejs.org/en/) >= 12.x
 - [pnpm](https://pnpm.io)
+- [docker compose](https://docs.docker.com/compose/)
 
 ### Installation
 
@@ -28,6 +29,18 @@ Then, install the dependencies:
 
 ```bash
 pnpm install
+```
+
+Start docker container:
+
+```bash
+docker compose up
+```
+
+Run migrations:
+
+```bash
+pnpm exec prisma migrate dev
 ```
 
 Finally, you can start the development server:

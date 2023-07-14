@@ -1,0 +1,72 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String    @id @default(uuid())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  email     String    @unique
+  password  String
+  firstName String?
+  lastName  String?
+  projects  Project[]
+  rewards   Reward[]
+}
+
+enum PROJECT_STATUS {
+  IN_PROGRESS
+  COMPLETED
+}
+
+model Project {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  ownerId String
+  owner   User   @relation(fields: [ownerId], references: [id])
+
+  name         String
+  description  String?
+  expected_due DateTime?
+  status       PROJECT_STATUS @default(IN_PROGRESS)
+  rewards      Reward[]
+  deleted      Boolean        @default(false)
+
+  @@unique([ownerId, name])
+  @@index([ownerId, id])
+}
+
+enum REWARD_STATUS {
+  RECEIVED
+  NOT_RECEIVED
+}
+
+model Reward {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  ownerId String
+  owner   User   @relation(fields: [ownerId], references: [id])
+
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id])
+
+  status      REWARD_STATUS @default(NOT_RECEIVED)
+  name        String
+  description String
+
+  deleted Boolean @default(false)
+
+  @@index([ownerId])
+}
