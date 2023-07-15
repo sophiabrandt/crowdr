@@ -1,3 +1,10 @@
+<br />
+<div align="center">
+  <a href="https://github.com/sophiabrandt/crowdr">
+    <img src="assets/images/logo.svg" alt="appreciation logo" width="100" height="100">
+  </a>
+</div>
+
 # crowdr
 
 The idea behind crowdr is to serve as a Next.js playground to explore the new Next.js 13 features.
@@ -5,6 +12,8 @@ The idea behind crowdr is to serve as a Next.js playground to explore the new Ne
 crowdr is a tool for tracking, managing, and viewing crowdfunding projects that users have supported. The application is built using [Next.js](https://nextjs.org) and [Prisma](https://www.prisma.io/). It provides an array of features such as project submission, project management, reward management, and search & filtering.
 
 Parts of the code come from the [FrontendMasters Next.js course by Scott Moss](https://frontendmasters.com/courses/fullstack-app-next-v2/dashboard-home-page/).
+
+The logo comes from [undraw](https://undraw.co/). 🩷
 
 ## Getting Started
 
