@@ -9,7 +9,7 @@ export const GlassPane = ({ children, className }: GlassPaneProps) => {
   return (
     <div
       className={clsx(
-        'glass rounded-2xl border-solid border-2 border-gray-200',
+        'glass rounded-2xl border-2 border-solid border-gray-200',
         className
       )}
     >
