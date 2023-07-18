@@ -1,6 +1,6 @@
 import { register, signin } from '@/lib/api';
 
-export type authModeKeys = 'register' | 'signin';
+export type AuthMode = 'register' | 'signin';
 
 export const actions = { register: register, signin: signin };
 
@@ -10,6 +10,15 @@ interface AuthContent {
   header: string;
   subheader: string;
   buttonText: string;
+}
+
+export interface AuthModeContent {
+  linkUrl: string;
+  linkText: string;
+  header: string;
+  subheader: string;
+  buttonText: string;
+  action: AuthMode;
 }
 
 export const signinContent: AuthContent = {
@@ -28,7 +37,7 @@ export const registerContent: AuthContent = {
   buttonText: 'Register',
 };
 
-export const authModes = {
+export const authModes: Record<AuthMode, AuthModeContent> = {
   register: {
     ...registerContent,
     action: 'register',

@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { Card } from './Card';
 import { Button } from './Button';
 import { Input } from './Input';
-import { actions, authModeKeys } from '@/shared/auth-form';
+import { AuthModeContent, actions } from '@/shared/auth-form';
 
 interface FormState {
   email: string;
@@ -84,14 +84,7 @@ const FormInput = ({
 );
 
 interface AuthFormProps {
-  mode: {
-    linkUrl: string;
-    linkText: string;
-    header: string;
-    subheader: string;
-    buttonText: string;
-    action: authModeKeys;
-  };
+  mode: AuthModeContent;
 }
 
 export const AuthForm = ({ mode }: AuthFormProps) => {
