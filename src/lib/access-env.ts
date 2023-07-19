@@ -8,9 +8,7 @@ const getFromCache = (key: string): string | undefined => {
 
 const getFromEnv = (key: string): string => {
   if (!(key in process.env)) {
-    throw new Error(
-      `Environment variable ${key} not found and no default value provided!`
-    );
+    throw new Error(`Environment variable ${key} not found!`);
   }
   return process.env[key]!;
 };
