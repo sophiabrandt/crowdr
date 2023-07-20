@@ -22,9 +22,9 @@
     "paths": {
       "@/*": ["./src/*"],
       "@/assets/*": ["./assets/*"],
+      "@/helpers/*": ["./src/helpers/*"],
       "@/lib/*": ["./src/lib/*"],
       "@/components/*": ["./src/components/*"],
-      "@/shared/*": ["./src/shared/*"],
       "@/styles/*": ["./src/styles/*"],
       "@/prisma/*": ["./prisma/*"]
     }

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { jwtVerify } from 'jose';
 import middleware from './middleware';
-import { assertType } from './util';
+import { assertType } from './helpers/testing-utils';
 
 jest.mock('jose', () => ({ jwtVerify: jest.fn() }));
 jest.mock('./lib/access-env', () => ({

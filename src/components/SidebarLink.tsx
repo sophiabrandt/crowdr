@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import clsx from 'clsx';
 import { usePathname } from 'next/navigation';
-import { ISidebar, icons } from '@/shared/side-bar';
+import { ISidebar, icons } from '@/helpers/side-bar';
 
 interface SidebarProps {
   link: ISidebar;

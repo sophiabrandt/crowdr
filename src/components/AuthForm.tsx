@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Card } from './Card';
 import { Button } from './Button';
-import { AuthModeContent, actions } from '@/shared/auth-form';
+import { AuthModeContent, actions } from '@/helpers/auth-form';
 import { FormInput } from './FormInput';
 
 interface FormState {

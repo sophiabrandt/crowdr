@@ -1,4 +1,4 @@
-import { assertType } from '@/util';
+import { assertType } from '@/helpers/testing-utils';
 import { register, signin } from './api';
 
 global.fetch = jest.fn();

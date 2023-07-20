@@ -2,7 +2,7 @@ import Image from 'next/image';
 import logo from '@/assets/images/logo.svg';
 import { Card } from './Card';
 import { SidebarLink } from './SidebarLink';
-import { links } from '@/shared/side-bar';
+import { links } from '@/helpers/side-bar';
 
 export const Sidebar = () => {
   return (

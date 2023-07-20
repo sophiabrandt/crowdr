@@ -14,7 +14,7 @@ const sharedConfig = {
   moduleNameMapper: {
     '^@/lib/(.*)$': '<rootDir>/src/lib/$1',
     '^@/components/(.*)$': '<rootDir>/src/components/$1',
-    '^@/shared/(.*)$': '<rootDir>/src/shared/$1',
+    '^@/helpers/(.*)$': '<rootDir>/src/helpers/$1',
     '^@/styles/(.*)$': '<rootDir>/src/styles/$1',
     '^@/prisma/(.*)$': '<rootDir>/prisma/$1',
   },
@@ -23,7 +23,7 @@ const sharedConfig = {
 const clientTestConfig = {
   ...sharedConfig,
   testEnvironment: 'jest-environment-jsdom',
-  testMatch: ['**/src/{app,components,shared}/**/*.spec.ts?(x)'],
+  testMatch: ['**/src/{app,components,helpers}/**/*.spec.ts?(x)'],
 };
 
 const serverTestConfig = {
