@@ -5,8 +5,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Card } from './Card';
 import { Button } from './Button';
-import { Input } from './Input';
 import { AuthModeContent, actions } from '@/shared/auth-form';
+import { FormInput } from './FormInput';
 
 interface FormState {
   email: string;
@@ -50,38 +50,6 @@ function formStateReducer(state: FormState, action: Action): FormState {
       return state;
   }
 }
-
-interface FormInputProps {
-  name: string;
-  placeholder: string;
-  value: string;
-  className: string;
-  type?: string;
-  required?: boolean;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
-}
-
-const FormInput = ({
-  name,
-  placeholder,
-  value,
-  className,
-  type = 'text',
-  required = false,
-  onChange,
-}: FormInputProps) => (
-  <>
-    <div className="text-lg text-black/50">{name}</div>
-    <Input
-      required={required}
-      type={type}
-      placeholder={placeholder}
-      value={value}
-      className={className}
-      onChange={onChange}
-    />
-  </>
-);
 
 interface AuthFormProps {
   mode: AuthModeContent;
