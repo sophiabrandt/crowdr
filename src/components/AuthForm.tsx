@@ -70,7 +70,7 @@ export const AuthForm = ({ mode }: AuthFormProps) => {
       } catch (e) {
         dispatch({
           type: 'setError',
-          payload: `Could not perform action`,
+          payload: 'Could not perform action',
         });
       } finally {
         dispatch({
