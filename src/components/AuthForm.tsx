@@ -8,7 +8,7 @@ import { Button } from './Button';
 import { AuthModeContent, actions } from '@/helpers/auth-form';
 import { FormInput } from './FormInput';
 
-interface FormState {
+export interface FormState {
   email: string;
   password: string;
   firstName: string;
@@ -24,7 +24,7 @@ const initialState: FormState = {
   error: '',
 };
 
-type Action =
+export type Action =
   | { type: 'setEmail'; payload: string }
   | { type: 'setPassword'; payload: string }
   | { type: 'setFirstName'; payload: string }
@@ -32,7 +32,7 @@ type Action =
   | { type: 'setError'; payload: string }
   | { type: 'reset' };
 
-function formStateReducer(state: FormState, action: Action): FormState {
+export function formStateReducer(state: FormState, action: Action): FormState {
   switch (action.type) {
     case 'setEmail':
       return { ...state, email: action.payload };
