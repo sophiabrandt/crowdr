@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { SidebarLink } from './SidebarLink';
 import { ISidebar, icons } from '@/helpers/side-bar';
 import * as NextNavigation from 'next/navigation';
-import { assertType } from '@/helpers/testing-utils';
+import { assertType } from '@/helpers/utils';
 
 jest.mock('next/navigation', () => ({
   usePathname: jest.fn(),

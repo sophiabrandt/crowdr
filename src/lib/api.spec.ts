@@ -1,5 +1,5 @@
-import { assertType } from '@/helpers/testing-utils';
-import { register, signin } from './api';
+import { assertType } from '@/helpers/utils';
+import { fetcher, register, signin } from './api';
 
 global.fetch = jest.fn();
 
@@ -12,6 +12,61 @@ describe('API methods', () => {
     email: 'test@email.com',
     password: 'testpassword',
   };
+
+  it('should return parsed JSON when response is ok and json parameter is true', async () => {
+    const mockJsonPromise = Promise.resolve({ message: 'Success' });
+    const mockFetchPromise = Promise.resolve({
+      ok: true,
+      json: () => mockJsonPromise,
+    });
+
+    assertType<jest.Mock>(fetch).mockResolvedValueOnce(mockFetchPromise);
+
+    const response = await fetcher({
+      url: '/api/test',
+      method: 'GET',
+      body: null,
+      json: true,
+    });
+
+    expect(fetch).toHaveBeenCalledWith('/api/test', {
+      method: 'GET',
+      body: null,
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    });
+
+    expect(response).toEqual({ message: 'Success' });
+  });
+
+  it('should not parse response as JSON when json parameter is false', async () => {
+    const mockFetchPromise = Promise.resolve({
+      ok: true,
+      text: () => Promise.resolve('Success'),
+    });
+
+    assertType<jest.Mock>(fetch).mockResolvedValueOnce(mockFetchPromise);
+
+    const response = await fetcher({
+      url: '/api/test',
+      method: 'GET',
+      body: null,
+      json: false,
+    });
+
+    expect(fetch).toHaveBeenCalledWith('/api/test', {
+      method: 'GET',
+      body: null,
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    });
+
+    expect(response).toBeUndefined();
+  });
 
   it('should register a user', async () => {
     assertType<jest.Mock>(fetch).mockResolvedValueOnce({

@@ -5,7 +5,7 @@ import {
   AuthModeContent,
   registerContent,
   signinContent,
-} from './auth-form';
+} from './auth-modes';
 
 jest.mock('@/lib/api', () => ({
   register: jest.fn(),

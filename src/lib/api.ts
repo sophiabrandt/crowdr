@@ -1,10 +1,10 @@
 import type { User } from '@prisma/client';
 
-const fetcher = async ({
+export const fetcher = async ({
   url,
   method,
   body,
-  json = true,
+  json,
 }: {
   url: any;
   method: any;

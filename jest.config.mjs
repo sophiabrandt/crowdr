@@ -10,7 +10,11 @@ const createJestConfig = nextJest({
 const sharedConfig = {
   // Add more setup options before each test is run
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
-
+  coveragePathIgnorePatterns: [
+    '<rootDir>/build/',
+    '<rootDir>/node_modules/',
+    '<rootDir>/src/helpers/utils.ts',
+  ],
   moduleNameMapper: {
     '^@/lib/(.*)$': '<rootDir>/src/lib/$1',
     '^@/components/(.*)$': '<rootDir>/src/components/$1',

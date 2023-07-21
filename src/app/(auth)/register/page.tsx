@@ -1,10 +1,10 @@
-import { AuthForm } from '@/components/AuthForm';
-import { authModes } from '@/helpers/auth-form';
+import { AuthFormContainer } from '@/components/AuthFormContainer';
+import { authModes } from '@/helpers/auth-modes';
 
 export default function Register() {
   return (
     <div>
-      <AuthForm mode={authModes.register} />
+      <AuthFormContainer mode={authModes.register} />
     </div>
   );
 }

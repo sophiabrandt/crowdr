@@ -1,9 +1,8 @@
 import bcrypt from 'bcrypt';
 import { SignJWT, jwtVerify } from 'jose';
-import { db } from './db';
 import { accessEnv } from './access-env';
 import { RequestCookies } from 'next/dist/compiled/@edge-runtime/cookies';
-import { User } from '@prisma/client';
+import { PrismaClient, User } from '@prisma/client';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 interface Payload {
@@ -43,7 +42,7 @@ export const createJWT = (user: Partial<User>) => {
     .sign(secret);
 };
 
-function isJWTVerifyPayload(obj: any): obj is JWTVerifyPayload {
+export function isJWTVerifyPayload(obj: any): obj is JWTVerifyPayload {
   return (
     obj &&
     typeof obj === 'object' &&
@@ -62,7 +61,7 @@ function isJWTVerifyPayload(obj: any): obj is JWTVerifyPayload {
   );
 }
 
-const verifyAndValidateJWT = async (
+export const verifyAndValidateJWT = async (
   jwt: string | Uint8Array,
   secret: Uint8Array
 ): Promise<JWTVerifyPayload> => {
@@ -82,7 +81,10 @@ export const validateJWT = async (
   return verifyAndValidateJWT(jwt, secret);
 };
 
-export const getUserFromCookie = async (cookies: RequestCookies) => {
+export const getUserFromCookie = async (
+  cookies: RequestCookies,
+  db: PrismaClient
+) => {
   const cookieName = accessEnv('COOKIE_NAME');
   const jwt = cookies.get(cookieName);
   if (!jwt) {

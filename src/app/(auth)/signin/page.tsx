@@ -1,10 +1,10 @@
-import { AuthForm } from '@/components/AuthForm';
-import { authModes } from '@/helpers/auth-form';
+import { AuthFormContainer } from '@/components/AuthFormContainer';
+import { authModes } from '@/helpers/auth-modes';
 
 export default function Signin() {
   return (
     <div>
-      <AuthForm mode={authModes.signin} />
+      <AuthFormContainer mode={authModes.signin} />
     </div>
   );
 }
