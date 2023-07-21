@@ -88,10 +88,7 @@ describe('formStateReducer', () => {
       loading: false,
     };
     const action = assertType<Action>({ type: 'reset' });
-    expect(formStateReducer(currentState, action)).toEqual({
-      ...initialState,
-      error: currentState.error,
-    });
+    expect(formStateReducer(currentState, action)).toEqual(initialState);
   });
 });
 

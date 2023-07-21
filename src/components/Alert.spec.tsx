@@ -5,7 +5,7 @@ jest.useFakeTimers();
 
 describe('useAlert', () => {
   it('should handle alert state correctly', () => {
-    let result: any;
+    let result: ReturnType<typeof useAlert>;
     const TestComponent = () => {
       result = useAlert();
       return null;
@@ -14,16 +14,16 @@ describe('useAlert', () => {
     render(<TestComponent />);
 
     act(() => {
-      result.setIsAlertOpen(true);
+      result.setAlertDialog({ isOpen: true, message: 'My error message' });
     });
 
-    expect(result.isAlertOpen).toBe(true);
+    expect(result!.alertDialog.isOpen).toBe(true);
 
     act(() => {
       jest.advanceTimersByTime(3000);
     });
 
-    expect(result.isAlertOpen).toBe(false);
+    expect(result!.alertDialog.isOpen).toBe(false);
   });
 });
 

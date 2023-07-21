@@ -2,20 +2,23 @@ import { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 
 export const useAlert = () => {
-  const [isAlertOpen, setIsAlertOpen] = useState(false);
+  const [alertDialog, setAlertDialog] = useState({
+    isOpen: false,
+    message: '',
+  });
 
   useEffect(() => {
-    if (isAlertOpen) {
+    if (alertDialog.isOpen) {
       const timer = setTimeout(() => {
-        setIsAlertOpen(false);
+        setAlertDialog({ isOpen: false, message: '' });
       }, 3000);
       return () => clearTimeout(timer);
     }
-  }, [isAlertOpen]);
+  }, [alertDialog]);
 
   return {
-    isAlertOpen,
-    setIsAlertOpen,
+    alertDialog,
+    setAlertDialog,
   };
 };
 

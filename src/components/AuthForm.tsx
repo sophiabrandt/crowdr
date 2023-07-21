@@ -51,7 +51,7 @@ export function formStateReducer(state: FormState, action: Action): FormState {
     case 'setLoading':
       return { ...state, loading: action.payload };
     case 'reset':
-      return { ...initialState, error: state.error };
+      return initialState;
     default:
       return state;
   }
@@ -63,7 +63,7 @@ interface AuthFormProps {
 
 export const AuthForm = ({ mode }: AuthFormProps) => {
   const [formState, dispatch] = useReducer(formStateReducer, initialState);
-  const { isAlertOpen, setIsAlertOpen } = useAlert();
+  const { alertDialog, setAlertDialog } = useAlert();
 
   const modeAction = actions[mode.action];
 
@@ -77,11 +77,12 @@ export const AuthForm = ({ mode }: AuthFormProps) => {
         await modeAction(formState);
         router.replace('/home');
       } catch (e) {
-        setIsAlertOpen(true);
+        const message =
+          e instanceof Error ? `${e.message}` : 'Could not perform action';
+        setAlertDialog({ isOpen: true, message });
         dispatch({
           type: 'setError',
-          payload:
-            e instanceof Error ? `${e.message}` : 'Could not perform action',
+          payload: message,
         });
       } finally {
         dispatch({
@@ -89,7 +90,7 @@ export const AuthForm = ({ mode }: AuthFormProps) => {
         });
       }
     },
-    [formState, modeAction, router]
+    [formState, modeAction, router, setAlertDialog]
   );
 
   return (
@@ -169,7 +170,7 @@ export const AuthForm = ({ mode }: AuthFormProps) => {
             </div>
           </div>
         </form>
-        {isAlertOpen && <Alert message={formState.error} />}
+        {alertDialog.isOpen && <Alert message={alertDialog.message} />}
       </div>
     </Card>
   );
