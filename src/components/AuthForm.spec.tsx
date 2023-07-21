@@ -1,6 +1,6 @@
-import { render, fireEvent, waitFor } from '@testing-library/react';
+import { render, fireEvent, waitFor, act } from '@testing-library/react';
 import { useRouter } from 'next/navigation';
-import { Action, AuthForm, FormState, formStateReducer } from './AuthForm';
+import { Action, AuthForm, formStateReducer } from './AuthForm';
 import { AuthMode, actions, authModes } from '@/helpers/auth-form';
 import userEvent from '@testing-library/user-event';
 import { assertType } from '@/helpers/testing-utils';
@@ -24,6 +24,7 @@ describe('formStateReducer', () => {
     firstName: '',
     lastName: '',
     error: '',
+    loading: false,
   };
 
   it('should handle setEmail', () => {
@@ -68,6 +69,15 @@ describe('formStateReducer', () => {
     expect(formStateReducer(initialState, action)).toEqual(expectedState);
   });
 
+  it('should handle setLoading', () => {
+    const action = assertType<Action>({
+      type: 'setLoading',
+      payload: true,
+    });
+    const expectedState = { ...initialState, loading: true };
+    expect(formStateReducer(initialState, action)).toEqual(expectedState);
+  });
+
   it('should handle reset', () => {
     const currentState = {
       email: 'test@test.com',
@@ -75,8 +85,9 @@ describe('formStateReducer', () => {
       firstName: 'John',
       lastName: 'Doe',
       error: '',
+      loading: false,
     };
-    const action = { type: 'reset' };
+    const action = assertType<Action>({ type: 'reset' });
     expect(formStateReducer(currentState, action)).toEqual(initialState);
   });
 });
@@ -107,21 +118,31 @@ describe('AuthForm', () => {
     const { mockRouter, emailInput, passwordInput, submitButton } =
       setup('register');
 
-    fireEvent.change(emailInput, { target: { value: 'test@test.com' } });
-    fireEvent.change(passwordInput, { target: { value: 'testpassword' } });
+    act(() => {
+      fireEvent.change(emailInput, { target: { value: 'test@test.com' } });
+      fireEvent.change(passwordInput, { target: { value: 'testpassword' } });
+    });
+
     userEvent.click(submitButton);
 
     await waitFor(() => expect(actions.register).toHaveBeenCalledTimes(1));
-    expect(actions.register).toHaveBeenCalledWith({
-      email: 'test@test.com',
-      password: 'testpassword',
-      firstName: '',
-      lastName: '',
-      error: '',
+
+    await waitFor(() => {
+      expect(actions.register).toHaveBeenCalledWith({
+        email: 'test@test.com',
+        password: 'testpassword',
+        firstName: '',
+        lastName: '',
+        error: '',
+        loading: false,
+      });
     });
 
     await waitFor(() => {
       expect(mockRouter.replace).toHaveBeenCalledTimes(1);
+    });
+
+    await waitFor(() => {
       expect(mockRouter.replace).toHaveBeenCalledWith('/home');
     });
   });
@@ -130,8 +151,11 @@ describe('AuthForm', () => {
     const { mockRouter, emailInput, passwordInput, submitButton } =
       setup('signin');
 
-    fireEvent.change(emailInput, { target: { value: 'test@test.com' } });
-    fireEvent.change(passwordInput, { target: { value: 'testpassword' } });
+    act(() => {
+      fireEvent.change(emailInput, { target: { value: 'test@test.com' } });
+      fireEvent.change(passwordInput, { target: { value: 'testpassword' } });
+    });
+
     userEvent.click(submitButton);
 
     await waitFor(() => expect(actions.signin).toHaveBeenCalledTimes(1));
@@ -142,9 +166,15 @@ describe('AuthForm', () => {
         firstName: '',
         lastName: '',
         error: '',
+        loading: false,
       });
+    });
 
+    await waitFor(() => {
       expect(mockRouter.replace).toHaveBeenCalledTimes(1);
+    });
+
+    await waitFor(() => {
       expect(mockRouter.replace).toHaveBeenCalledWith('/home');
     });
   });

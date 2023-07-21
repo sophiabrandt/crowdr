@@ -4,11 +4,15 @@ const buttonClasses = cva(
   [
     'rounded-3xl',
     'font-bold',
-    'hover:scale-110',
-    'active:scale-100',
-    'transition',
-    'duration-200',
+    'enabled:hover:scale-110',
+    'enabled:active:scale-100',
+    'enabled:transition',
+    'enabled:duration-200',
     'ease-in-out',
+    'disabled:bg-slate-300',
+    'disabled:text-slate-600',
+    'disabled:border-slate-600',
+    'disabled:pointer-events-none',
   ],
   {
     variants: {

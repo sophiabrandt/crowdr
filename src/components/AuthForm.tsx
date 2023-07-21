@@ -14,6 +14,7 @@ export interface FormState {
   firstName: string;
   lastName: string;
   error: string;
+  loading: boolean;
 }
 
 const initialState: FormState = {
@@ -22,6 +23,7 @@ const initialState: FormState = {
   firstName: '',
   lastName: '',
   error: '',
+  loading: false,
 };
 
 export type Action =
@@ -30,6 +32,7 @@ export type Action =
   | { type: 'setFirstName'; payload: string }
   | { type: 'setLastName'; payload: string }
   | { type: 'setError'; payload: string }
+  | { type: 'setLoading'; payload: boolean }
   | { type: 'reset' };
 
 export function formStateReducer(state: FormState, action: Action): FormState {
@@ -44,6 +47,8 @@ export function formStateReducer(state: FormState, action: Action): FormState {
       return { ...state, lastName: action.payload };
     case 'setError':
       return { ...state, error: action.payload };
+    case 'setLoading':
+      return { ...state, loading: action.payload };
     case 'reset':
       return initialState;
     default:
@@ -63,6 +68,7 @@ export const AuthForm = ({ mode }: AuthFormProps) => {
   const handleSubmit = useCallback(
     async (e: FormEvent) => {
       e.preventDefault();
+      dispatch({ type: 'setLoading', payload: true });
 
       try {
         await modeAction(formState);
@@ -148,7 +154,11 @@ export const AuthForm = ({ mode }: AuthFormProps) => {
               </span>
             </div>
             <div>
-              <Button type="submit" intent="secondary">
+              <Button
+                disabled={formState.loading}
+                type="submit"
+                intent="secondary"
+              >
                 {mode.buttonText}
               </Button>
             </div>
