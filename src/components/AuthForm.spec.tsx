@@ -84,11 +84,14 @@ describe('formStateReducer', () => {
       password: 'testpassword',
       firstName: 'John',
       lastName: 'Doe',
-      error: '',
+      error: 'some error',
       loading: false,
     };
     const action = assertType<Action>({ type: 'reset' });
-    expect(formStateReducer(currentState, action)).toEqual(initialState);
+    expect(formStateReducer(currentState, action)).toEqual({
+      ...initialState,
+      error: currentState.error,
+    });
   });
 });
 

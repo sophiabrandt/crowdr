@@ -7,6 +7,7 @@ import { Card } from './Card';
 import { Button } from './Button';
 import { AuthModeContent, actions } from '@/helpers/auth-form';
 import { FormInput } from './FormInput';
+import { Alert, useAlert } from './Alert';
 
 export interface FormState {
   email: string;
@@ -50,7 +51,7 @@ export function formStateReducer(state: FormState, action: Action): FormState {
     case 'setLoading':
       return { ...state, loading: action.payload };
     case 'reset':
-      return initialState;
+      return { ...initialState, error: state.error };
     default:
       return state;
   }
@@ -62,6 +63,8 @@ interface AuthFormProps {
 
 export const AuthForm = ({ mode }: AuthFormProps) => {
   const [formState, dispatch] = useReducer(formStateReducer, initialState);
+  const { isAlertOpen, setIsAlertOpen } = useAlert();
+
   const modeAction = actions[mode.action];
 
   const router = useRouter();
@@ -74,9 +77,11 @@ export const AuthForm = ({ mode }: AuthFormProps) => {
         await modeAction(formState);
         router.replace('/home');
       } catch (e) {
+        setIsAlertOpen(true);
         dispatch({
           type: 'setError',
-          payload: 'Could not perform action',
+          payload:
+            e instanceof Error ? `${e.message}` : 'Could not perform action',
         });
       } finally {
         dispatch({
@@ -164,6 +169,7 @@ export const AuthForm = ({ mode }: AuthFormProps) => {
             </div>
           </div>
         </form>
+        {isAlertOpen && <Alert message={formState.error} />}
       </div>
     </Card>
   );

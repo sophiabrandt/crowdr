@@ -21,7 +21,7 @@ const fetcher = async ({
   });
 
   if (!res.ok) {
-    throw new Error('API Error');
+    throw new Error(`API Error: ${res.status} ${res.statusText}`);
   }
 
   if (json) {

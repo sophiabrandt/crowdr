@@ -4,7 +4,7 @@ import { Sidebar } from './Sidebar';
 jest.mock('next/image', () => ({
   __esModule: true,
   default: ({ priority, ...props }: { priority: boolean | undefined }) => {
-    // eslint-disable-next-line jsx-a11y/alt-text, react/react-in-jsx-scope
+    // eslint-disable-next-line jsx-a11y/alt-text, react/react-in-jsx-scope, @next/next/no-img-element
     return <img {...props} />;
   },
 }));
