@@ -11,7 +11,7 @@ The idea behind crowdr is to serve as a Next.js playground to explore the new Ne
 
 crowdr is a tool for tracking, managing, and viewing crowdfunding projects that users have supported. The application is built using [Next.js](https://nextjs.org) and [Prisma](https://www.prisma.io/). It provides an array of features such as project submission, project management, reward management, and search & filtering.
 
-Parts of the code come from the [FrontendMasters Next.js course by Scott Moss](https://frontendmasters.com/courses/fullstack-app-next-v2/dashboard-home-page/).
+I found the original inspiration in the [FrontendMasters Next.js course by Scott Moss](https://frontendmasters.com/courses/fullstack-app-next-v2/dashboard-home-page/), but I significantly rewrote the code and changed the architeture to allow for testing.
 
 The logo comes from [undraw](https://undraw.co/). 🩷
 
@@ -38,6 +38,12 @@ Then, install the dependencies:
 
 ```bash
 pnpm install
+```
+
+Copy the environment variables file (and add the correct values for your use caes):
+
+```bash
+cp env.example .env
 ```
 
 Start docker container:
