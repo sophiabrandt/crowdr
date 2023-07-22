@@ -20,7 +20,11 @@ describe('Authentication utilities', () => {
 
   beforeEach(() => {
     originalEnv = process.env;
-    process.env = { ...originalEnv, JWT_SECRET: 'testSecret' };
+    process.env = {
+      ...originalEnv,
+      JWT_SECRET: 'testSecret',
+      COOKIE_NAME: 'testCookie',
+    };
   });
 
   afterEach(() => {
