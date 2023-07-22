@@ -1,9 +1,9 @@
 import bcrypt from 'bcrypt';
 import { SignJWT, jwtVerify } from 'jose';
 import { accessEnv } from './access-env';
-import { RequestCookies } from 'next/dist/compiled/@edge-runtime/cookies';
 import { PrismaClient, User } from '@prisma/client';
 import { NextApiRequest, NextApiResponse } from 'next';
+import { ReadonlyRequestCookies } from 'next/dist/server/web/spec-extension/adapters/request-cookies';
 
 interface Payload {
   id: string;
@@ -82,7 +82,7 @@ export const validateJWT = async (
 };
 
 export const getUserFromCookie = async (
-  cookies: RequestCookies,
+  cookies: ReadonlyRequestCookies,
   db: PrismaClient
 ) => {
   const cookieName = accessEnv('COOKIE_NAME');

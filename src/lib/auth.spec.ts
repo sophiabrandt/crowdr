@@ -1,4 +1,3 @@
-import { RequestCookies } from 'next/dist/compiled/@edge-runtime/cookies';
 import {
   hashPassword,
   comparePasswords,
@@ -14,6 +13,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { assertType } from '@/helpers/utils';
 import { SignJWT, jwtVerify } from 'jose';
 import { PrismaClient } from '@prisma/client';
+import { ReadonlyRequestCookies } from 'next/dist/server/web/spec-extension/adapters/request-cookies';
 
 describe('Authentication utilities', () => {
   let originalEnv: NodeJS.ProcessEnv;
@@ -93,7 +93,7 @@ describe('Authentication utilities', () => {
   it('getUserFromCookie should correctly retrieve the user', async () => {
     const user = { id: '1', email: 'test@example.com' };
     const jwt = await createJWT(user);
-    const cookies: RequestCookies = assertType<RequestCookies>({
+    const cookies = assertType<ReadonlyRequestCookies>({
       get: (_name: string) => {
         return { value: jwt };
       },
@@ -110,7 +110,7 @@ describe('Authentication utilities', () => {
   });
 
   it('getUserFromCookie should throw error when no JWT present', async () => {
-    const cookies: RequestCookies = assertType<RequestCookies>({
+    const cookies = assertType<ReadonlyRequestCookies>({
       get: (_name: string) => {
         return null;
       },
@@ -128,7 +128,7 @@ describe('Authentication utilities', () => {
   it('getUserFromCookie should throw error when user not found', async () => {
     const user = { id: '1', email: 'test@example.com' };
     const jwt = await createJWT(user);
-    const cookies: RequestCookies = assertType<RequestCookies>({
+    const cookies = assertType<ReadonlyRequestCookies>({
       get: (_name: string) => {
         return { value: jwt };
       },
