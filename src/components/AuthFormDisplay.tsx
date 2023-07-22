@@ -79,7 +79,7 @@ export const AuthFormDisplay = ({
             className="border-gray w-full rounded-3xl border-2 border-solid px-6 py-2 text-lg"
             onChange={handleChange(ActionTypes.SetPassword)}
           />
-          <div className="flex items-center justify-between">
+          <div className="mt-3 flex items-center justify-between">
             <div>
               <span>
                 <Link
