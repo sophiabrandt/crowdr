@@ -19,6 +19,7 @@ const sharedConfig = {
     '^@/lib/(.*)$': '<rootDir>/src/lib/$1',
     '^@/components/(.*)$': '<rootDir>/src/components/$1',
     '^@/helpers/(.*)$': '<rootDir>/src/helpers/$1',
+    '^@/server/(.*)$': '<rootDir>/src/server/$1',
     '^@/styles/(.*)$': '<rootDir>/src/styles/$1',
     '^@/prisma/(.*)$': '<rootDir>/prisma/$1',
   },
@@ -32,7 +33,7 @@ const clientTestConfig = {
 
 const serverTestConfig = {
   ...sharedConfig,
-  testEnvironment: 'node',
+  testEnvironment: 'jest-environment-node',
   testMatch: [
     '**/src/{lib,pages}/**/*.spec.[jt]s?(x)',
     '**/src/middleware.spec.ts',

@@ -17,7 +17,7 @@ interface JWTVerifyPayload {
   nbf: number;
 }
 
-export const getDecodedSecret = (): Uint8Array => {
+const getDecodedSecret = (): Uint8Array => {
   return new TextEncoder().encode(accessEnv('JWT_SECRET'));
 };
 
@@ -61,7 +61,7 @@ export function isJWTVerifyPayload(obj: any): obj is JWTVerifyPayload {
   );
 }
 
-export const verifyAndValidateJWT = async (
+const verifyAndValidateJWT = async (
   jwt: string | Uint8Array,
   secret: Uint8Array
 ): Promise<JWTVerifyPayload> => {
@@ -95,13 +95,11 @@ export const getUserFromCookie = async (
     payload: { id },
   } = await validateJWT(jwt.value);
 
-  const user = await db.user.findUnique({
+  return db.user.findUniqueOrThrow({
     where: {
       id,
     },
   });
-
-  return user;
 };
 
 export const httpMethod =

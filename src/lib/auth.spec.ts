@@ -1,19 +1,18 @@
 import {
   hashPassword,
   comparePasswords,
-  getDecodedSecret,
   createJWT,
   validateJWT,
   httpMethod,
   isJWTVerifyPayload,
   getUserFromCookie,
-  verifyAndValidateJWT,
 } from './auth';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { assertType } from '@/helpers/utils';
 import { SignJWT, jwtVerify } from 'jose';
 import { PrismaClient } from '@prisma/client';
 import { ReadonlyRequestCookies } from 'next/dist/server/web/spec-extension/adapters/request-cookies';
+import { accessEnv } from './access-env';
 
 describe('Authentication utilities', () => {
   let originalEnv: NodeJS.ProcessEnv;
@@ -45,11 +44,6 @@ describe('Authentication utilities', () => {
     expect(result).toBeTruthy();
   });
 
-  it('getDecodedSecret should return the decoded JWT_SECRET', () => {
-    const decodedSecret = getDecodedSecret();
-    expect(decodedSecret).toEqual(new TextEncoder().encode('testSecret'));
-  });
-
   it('createJWT should create a JWT with the user payload', async () => {
     const user = { id: '1', email: 'test@example.com' };
     const jwt = await createJWT(user);
@@ -60,7 +54,10 @@ describe('Authentication utilities', () => {
   it('createJWT should create a JWT with correct payload and headers', async () => {
     const user = { id: '1', email: 'test@example.com' };
     const jwt = await createJWT(user);
-    const decodedJwt: any = await jwtVerify(jwt, getDecodedSecret());
+    const decodedJwt: any = await jwtVerify(
+      jwt,
+      new TextEncoder().encode(accessEnv('JWT_SECRET'))
+    );
     expect(decodedJwt.payload.payload).toEqual(user);
   });
 
@@ -73,7 +70,7 @@ describe('Authentication utilities', () => {
 
   it('verifyAndValidateJWT should throw error for invalid JWT payload', async () => {
     // Create a JWT with missing 'email' field in the payload
-    const secret = getDecodedSecret();
+    const secret = new TextEncoder().encode(accessEnv('JWT_SECRET'));
     const iat = Math.floor(Date.now() / 1000);
     const exp = iat + 60 * 60 * 24 * 7;
     const invalidPayload = { id: '1' };
@@ -85,9 +82,7 @@ describe('Authentication utilities', () => {
       .setNotBefore(iat)
       .sign(secret);
 
-    await expect(verifyAndValidateJWT(jwt, secret)).rejects.toThrow(
-      'Unexpected JWT payload'
-    );
+    await expect(validateJWT(jwt)).rejects.toThrow('Unexpected JWT payload');
   });
 
   it('getUserFromCookie should correctly retrieve the user', async () => {
@@ -101,7 +96,7 @@ describe('Authentication utilities', () => {
 
     const mockDb = assertType<PrismaClient>({
       user: {
-        findUnique: jest.fn().mockResolvedValue(user),
+        findUniqueOrThrow: jest.fn().mockResolvedValue(user),
       },
     });
 
@@ -136,11 +131,15 @@ describe('Authentication utilities', () => {
 
     const mockDb = assertType<PrismaClient>({
       user: {
-        findUnique: jest.fn().mockRejectedValue(new Error('error')),
+        findUniqueOrThrow: jest
+          .fn()
+          .mockRejectedValue(new Error('No User found')),
       },
     });
 
-    await expect(getUserFromCookie(cookies, mockDb)).rejects.toThrow();
+    await expect(getUserFromCookie(cookies, mockDb)).rejects.toThrowError(
+      new Error('No User found')
+    );
   });
 
   it('isJWTVerifyPayload should identify valid and invalid payloads', () => {
