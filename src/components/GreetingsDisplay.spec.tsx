@@ -15,10 +15,7 @@ describe('Greetings', () => {
       name: /hello, john!/i,
     });
     screen.getByRole('heading', {
-      name: /check your daily tasks and schedule/i,
-    });
-    screen.getByRole('button', {
-      name: /today's schedule/i,
+      name: /check your projects and rewards/i,
     });
   });
 });
