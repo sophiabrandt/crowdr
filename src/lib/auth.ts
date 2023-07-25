@@ -17,10 +17,6 @@ interface JWTVerifyPayload {
   nbf: number;
 }
 
-const getDecodedSecret = (): Uint8Array => {
-  return new TextEncoder().encode(accessEnv('JWT_SECRET'));
-};
-
 export const hashPassword = (password: string | Buffer) =>
   bcrypt.hash(password, 10);
 
@@ -32,7 +28,7 @@ export const comparePasswords = (
 export const createJWT = (user: Partial<User>) => {
   const iat = Math.floor(Date.now() / 1000);
   const exp = iat + 60 * 60 * 24 * 7;
-  const secret = getDecodedSecret();
+  const secret = new TextEncoder().encode(accessEnv('JWT_SECRET'));
 
   return new SignJWT({ payload: { id: user.id, email: user.email } })
     .setProtectedHeader({ alg: 'HS256', typ: 'JWT' })
@@ -77,7 +73,7 @@ const verifyAndValidateJWT = async (
 export const validateJWT = async (
   jwt: string | Uint8Array
 ): Promise<JWTVerifyPayload> => {
-  const secret = getDecodedSecret();
+  const secret = new TextEncoder().encode(accessEnv('JWT_SECRET'));
   return verifyAndValidateJWT(jwt, secret);
 };
 

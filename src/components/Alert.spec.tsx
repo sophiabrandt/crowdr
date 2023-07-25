@@ -1,5 +1,5 @@
 import { render, act, screen } from '@testing-library/react';
-import { useAlert, Alert } from './Alert'; // Replace with your actual file
+import { useAlert, Alert } from './Alert';
 
 jest.useFakeTimers();
 

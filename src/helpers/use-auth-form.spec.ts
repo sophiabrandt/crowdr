@@ -8,6 +8,7 @@ import {
   useAuthFormState,
 } from './use-auth-form';
 import { assertType } from './utils';
+import React from 'react';
 
 jest.mock('@/lib/api', () => ({
   register: jest.fn(),
@@ -153,12 +154,14 @@ describe('useAuthForm', () => {
       useAuthForm(signin, initialState, jest.fn(), jest.fn(), jest.fn())
     );
 
-    (signin as jest.Mock).mockResolvedValue(true);
+    assertType<jest.Mock>(signin).mockResolvedValue(true);
 
     act(() => {
-      result.current.handleSubmit({
-        preventDefault: () => {},
-      } as React.FormEvent<HTMLFormElement>);
+      result.current.handleSubmit(
+        assertType<React.FormEvent<HTMLFormElement>>({
+          preventDefault: () => {},
+        })
+      );
     });
 
     await waitFor(() => {

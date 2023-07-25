@@ -31,13 +31,13 @@ describe('Authentication utilities', () => {
     jest.clearAllMocks();
   });
 
-  it('hashPassword should hash a given password', async () => {
+  it('should hash a given password', async () => {
     const password = 'password';
     const hashedPassword = await hashPassword(password);
     expect(hashedPassword).not.toEqual(password);
   });
 
-  it('comparePasswords should correctly compare a password and its hash', async () => {
+  it('should correctly compare a password and its hash', async () => {
     const password = 'password';
     const hashedPassword = await hashPassword(password);
     const result = await comparePasswords(password, hashedPassword);
@@ -51,7 +51,7 @@ describe('Authentication utilities', () => {
     expect(jwtComponents).toHaveLength(3);
   });
 
-  it('createJWT should create a JWT with correct payload and headers', async () => {
+  it('should create a JWT with correct payload and headers', async () => {
     const user = { id: '1', email: 'test@example.com' };
     const jwt = await createJWT(user);
     const decodedJwt: any = await jwtVerify(
@@ -61,14 +61,14 @@ describe('Authentication utilities', () => {
     expect(decodedJwt.payload.payload).toEqual(user);
   });
 
-  it('validateJWT should correctly validate the JWT', async () => {
+  it('should correctly validate the JWT', async () => {
     const user = { id: '1', email: 'test@example.com' };
     const jwt = await createJWT(user);
     const decodedJwt = await validateJWT(jwt);
     expect(decodedJwt.payload).toEqual(user);
   });
 
-  it('verifyAndValidateJWT should throw error for invalid JWT payload', async () => {
+  it('should throw error for invalid JWT payload', async () => {
     // Create a JWT with missing 'email' field in the payload
     const secret = new TextEncoder().encode(accessEnv('JWT_SECRET'));
     const iat = Math.floor(Date.now() / 1000);
@@ -85,7 +85,7 @@ describe('Authentication utilities', () => {
     await expect(validateJWT(jwt)).rejects.toThrow('Unexpected JWT payload');
   });
 
-  it('getUserFromCookie should correctly retrieve the user', async () => {
+  it('should correctly retrieve the user', async () => {
     const user = { id: '1', email: 'test@example.com' };
     const jwt = await createJWT(user);
     const cookies = assertType<ReadonlyRequestCookies>({
@@ -104,7 +104,7 @@ describe('Authentication utilities', () => {
     expect(retrievedUser).toEqual(user);
   });
 
-  it('getUserFromCookie should throw error when no JWT present', async () => {
+  it('should throw error when no JWT present', async () => {
     const cookies = assertType<ReadonlyRequestCookies>({
       get: (_name: string) => {
         return null;
@@ -113,7 +113,7 @@ describe('Authentication utilities', () => {
 
     const mockDb = assertType<PrismaClient>({
       user: {
-        findUnique: jest.fn(),
+        findUniqueOrThrow: jest.fn(),
       },
     });
 
@@ -142,7 +142,7 @@ describe('Authentication utilities', () => {
     );
   });
 
-  it('isJWTVerifyPayload should identify valid and invalid payloads', () => {
+  it('should identify valid and invalid payloads', () => {
     const validPayload = {
       payload: { id: '1', email: 'test@example.com' },
       exp: 1234567890,
@@ -154,7 +154,7 @@ describe('Authentication utilities', () => {
     expect(isJWTVerifyPayload(invalidPayload)).toBeFalsy();
   });
 
-  it('httpMethod should validate HTTP method correctly', async () => {
+  it('should validate HTTP method correctly', async () => {
     const handler = jest.fn();
     const req = assertType<NextApiRequest>({ method: 'GET' });
     const res = assertType<NextApiResponse>({

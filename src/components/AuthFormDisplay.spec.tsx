@@ -3,8 +3,8 @@ import { AuthFormDisplay } from './AuthFormDisplay';
 import { signin, register } from '@/lib/api';
 import { ActionTypes } from '@/helpers/use-auth-form';
 
-const mockHandleChagne = jest.fn();
-const mockHandleChangeCallback = jest.fn(() => mockHandleChagne);
+const mockHandleChange = jest.fn();
+const mockHandleChangeCallback = jest.fn(() => mockHandleChange);
 const mockHandleSubmit = jest.fn();
 
 describe('AuthFormDisplay', () => {
@@ -108,6 +108,6 @@ describe('AuthFormDisplay', () => {
     expect(mockHandleChangeCallback).toHaveBeenCalledWith(
       ActionTypes.SetFirstName
     );
-    expect(mockHandleChagne).toHaveBeenCalled();
+    expect(mockHandleChange).toHaveBeenCalled();
   });
 });
