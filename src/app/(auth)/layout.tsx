@@ -4,11 +4,7 @@ import { GlassPane } from '@/components/Glasspane';
 
 const inter = Inter({ subsets: ['latin'] });
 
-export default function AuthRootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+const AuthRootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="en" className={inter.className}>
       <head />
@@ -19,4 +15,6 @@ export default function AuthRootLayout({
       </body>
     </html>
   );
-}
+};
+
+export default AuthRootLayout;

@@ -43,7 +43,10 @@ export type Action =
 
 export type StringActionType = Extract<Action, { payload: string }>;
 
-export function formStateReducer(state: FormState, action: Action): FormState {
+export const formStateReducer = (
+  state: FormState,
+  action: Action
+): FormState => {
   switch (action.type) {
     case ActionTypes.SetEmail:
       return { ...state, email: action.payload };
@@ -60,9 +63,9 @@ export function formStateReducer(state: FormState, action: Action): FormState {
     case ActionTypes.Reset:
       return initialState;
     default:
-      assertNever(action);
+      return assertNever(action);
   }
-}
+};
 
 export const handleChange =
   (dispatch: (action: Action) => void, actionType: StringActionType['type']) =>

@@ -12,7 +12,7 @@ const verifyJWT = async (jwt: string) => {
   return payload;
 };
 
-export default async function middleware(req: NextRequest) {
+const middleware = async (req: NextRequest) => {
   const { pathname } = req.nextUrl;
 
   if (
@@ -40,4 +40,6 @@ export default async function middleware(req: NextRequest) {
     req.nextUrl.pathname = '/signin';
     return NextResponse.redirect(req.nextUrl);
   }
-}
+};
+
+export default middleware;

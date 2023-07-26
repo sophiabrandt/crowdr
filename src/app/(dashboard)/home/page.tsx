@@ -6,7 +6,7 @@ import { ProjectCardSkeleton } from '@/components/ProjectCardSkeleton';
 import { Suspense } from 'react';
 import { getUserProjectIds } from '@/lib/get-data';
 
-export default async function Page() {
+const Page = async () => {
   const projectIds = await getUserProjectIds();
 
   return (
@@ -36,4 +36,6 @@ export default async function Page() {
       </div>
     </div>
   );
-}
+};
+
+export default Page;

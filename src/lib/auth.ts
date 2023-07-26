@@ -38,7 +38,7 @@ export const createJWT = (user: Partial<User>) => {
     .sign(secret);
 };
 
-export function isJWTVerifyPayload(obj: any): obj is JWTVerifyPayload {
+export const isJWTVerifyPayload = (obj: any): obj is JWTVerifyPayload => {
   return (
     obj &&
     typeof obj === 'object' &&
@@ -55,7 +55,7 @@ export function isJWTVerifyPayload(obj: any): obj is JWTVerifyPayload {
     'nbf' in obj &&
     typeof obj.nbf === 'number'
   );
-}
+};
 
 const verifyAndValidateJWT = async (
   jwt: string | Uint8Array,

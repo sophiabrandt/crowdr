@@ -6,11 +6,7 @@ import { Sidebar } from '@/components/Sidebar';
 
 const inter = Inter({ subsets: ['latin'] });
 
-export default function DashboardRootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+const DashboardRootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="en" className={clsx(inter.className, 'dark')}>
       <head />
@@ -22,4 +18,6 @@ export default function DashboardRootLayout({
       </body>
     </html>
   );
-}
+};
+
+export default DashboardRootLayout;

@@ -12,7 +12,7 @@ const getRandomProjectStatus = () => {
   return statuses[Math.floor(Math.random() * statuses.length)];
 };
 
-async function main() {
+const main = async () => {
   const user = await db.user.upsert({
     where: { email: 'user@email.com' },
     update: {},
@@ -51,7 +51,8 @@ async function main() {
   );
 
   console.log({ user, rewards });
-}
+};
+
 main()
   .then(async () => {
     await db.$disconnect();
