@@ -100,7 +100,11 @@ describe('Authentication utilities', () => {
       },
     });
 
-    const retrievedUser = await getUserFromCookie(cookies, mockDb);
+    const retrievedUser = await getUserFromCookie({
+      cookies,
+      db: mockDb,
+      includeProjects: false,
+    });
     expect(retrievedUser).toEqual(user);
   });
 
@@ -117,7 +121,9 @@ describe('Authentication utilities', () => {
       },
     });
 
-    await expect(getUserFromCookie(cookies, mockDb)).rejects.toThrow('No JWT');
+    await expect(
+      getUserFromCookie({ cookies, db: mockDb, includeProjects: false })
+    ).rejects.toThrow('No JWT');
   });
 
   it('getUserFromCookie should throw error when user not found', async () => {
@@ -137,9 +143,9 @@ describe('Authentication utilities', () => {
       },
     });
 
-    await expect(getUserFromCookie(cookies, mockDb)).rejects.toThrowError(
-      new Error('No User found')
-    );
+    await expect(
+      getUserFromCookie({ cookies, db: mockDb, includeProjects: false })
+    ).rejects.toThrowError(new Error('No User found'));
   });
 
   it('should identify valid and invalid payloads', () => {

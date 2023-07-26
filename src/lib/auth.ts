@@ -77,10 +77,15 @@ export const validateJWT = async (
   return verifyAndValidateJWT(jwt, secret);
 };
 
-export const getUserFromCookie = async (
-  cookies: ReadonlyRequestCookies,
-  db: PrismaClient
-) => {
+export const getUserFromCookie = async ({
+  cookies,
+  db,
+  includeProjects,
+}: {
+  cookies: ReadonlyRequestCookies;
+  db: PrismaClient;
+  includeProjects: boolean;
+}) => {
   const cookieName = accessEnv('COOKIE_NAME');
   const jwt = cookies.get(cookieName);
   if (!jwt) {
@@ -94,6 +99,9 @@ export const getUserFromCookie = async (
   return db.user.findUniqueOrThrow({
     where: {
       id,
+    },
+    include: {
+      projects: includeProjects,
     },
   });
 };
