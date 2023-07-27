@@ -7,6 +7,7 @@ import {
   isJWTVerifyPayload,
   getUserFromCookie,
 } from './auth';
+import bcrypt from 'bcrypt';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { assertType } from '@/helpers/utils';
 import { SignJWT, jwtVerify } from 'jose';
@@ -32,9 +33,10 @@ describe('Authentication utilities', () => {
   });
 
   it('should hash a given password', async () => {
+    const bcryptSpy = jest.spyOn(bcrypt, 'hash');
     const password = 'password';
-    const hashedPassword = await hashPassword(password);
-    expect(hashedPassword).not.toEqual(password);
+    await hashPassword(password);
+    expect(bcryptSpy).toHaveBeenCalledWith(password, 10);
   });
 
   it('should correctly compare a password and its hash', async () => {
