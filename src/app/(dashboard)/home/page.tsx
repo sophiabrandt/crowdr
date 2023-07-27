@@ -19,10 +19,10 @@ const Page = async () => {
             <GreetingsContainer />
           </Suspense>
         </div>
-        <div className="flex-2 mt-3 flex w-full grow flex-wrap items-center">
+        <div className="mt-3 grid gap-4 grid-auto-fit">
           {!!projectIds.length &&
             projectIds.map((projectId: string) => (
-              <div className="w-1/3 p-2" key={projectId}>
+              <div className="p-2" key={projectId}>
                 <Link href={`/project/${projectId}`}>
                   <Suspense fallback={<ProjectCardSkeleton />}>
                     <ProjectCardContainer projectId={projectId} />

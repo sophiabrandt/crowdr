@@ -10,7 +10,7 @@ const DashboardRootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="en" className={clsx(inter.className, 'dark')}>
       <head />
-      <body className="candy-mesh h-screen w-screen p-6">
+      <body className="candy-mesh h-screen w-screen p-3 lg:p-6">
         <GlassPane className="align-center container mx-auto flex h-full w-full gap-3 p-6">
           <Sidebar />
           {children}
