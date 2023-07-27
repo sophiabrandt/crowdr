@@ -3,11 +3,11 @@ import { Card } from './Card';
 import { ProjectWithRewards, format } from '@/helpers/project';
 import { REWARD_STATUS, Reward } from '@prisma/client';
 
-interface ProjectCardProps {
+interface ProjectCardDisplayProps {
   project: ProjectWithRewards;
 }
 
-export const ProjectCard = ({ project }: ProjectCardProps) => {
+export const ProjectCardDisplay = ({ project }: ProjectCardDisplayProps) => {
   const receivedCount = project.rewards.filter(
     (reward: Reward) => reward.status === REWARD_STATUS.RECEIVED
   ).length;

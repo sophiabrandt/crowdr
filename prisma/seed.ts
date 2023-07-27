@@ -25,7 +25,6 @@ const main = async () => {
         create: new Array(5).fill(1).map((_, i) => ({
           name: `Project ${i}`,
           status: getRandomProjectStatus(),
-          expected_due: new Date(2023, 11, 22),
         })),
       },
     },
@@ -44,6 +43,7 @@ const main = async () => {
             projectId: project.id,
             description: `Everything that describes Reward ${i}`,
             status: getRandomRewardStatus(),
+            expected_due: new Date(2023, 11, 22),
           };
         }),
       })

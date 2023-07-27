@@ -35,12 +35,11 @@ model Project {
   ownerId String
   owner   User   @relation(fields: [ownerId], references: [id])
 
-  name         String
-  description  String?
-  expected_due DateTime?
-  status       PROJECT_STATUS @default(IN_PROGRESS)
-  rewards      Reward[]
-  deleted      Boolean        @default(false)
+  name        String
+  description String?
+  status      PROJECT_STATUS @default(IN_PROGRESS)
+  rewards     Reward[]
+  deleted     Boolean        @default(false)
 
   @@unique([ownerId, name])
   @@index([ownerId, id])
@@ -65,6 +64,8 @@ model Reward {
   status      REWARD_STATUS @default(NOT_RECEIVED)
   name        String
   description String
+
+  expected_due DateTime?
 
   deleted Boolean @default(false)
 

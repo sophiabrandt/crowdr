@@ -1,6 +1,6 @@
 import { getProjectById } from '@/lib/get-data';
-import { ProjectCard } from './ProjectCard';
 import { ProjectWithRewards } from '@/helpers/project';
+import { ProjectCardDisplay } from './ProjectCardDisplay';
 
 interface ProjectCardContainerProps {
   projectId: string;
@@ -11,7 +11,7 @@ export const ProjectCardContainer = async ({
 }: ProjectCardContainerProps) => {
   try {
     const project: ProjectWithRewards = await getProjectById(projectId);
-    return <ProjectCard project={project} />;
+    return <ProjectCardDisplay project={project} />;
   } catch (err) {
     console.error(
       `No project found with id ${projectId}: ${
