@@ -8,9 +8,9 @@ interface ProjectCardProps {
 }
 
 export const ProjectCard = ({ project }: ProjectCardProps) => {
-  const receivedCount = project.rewards
-    .map((reward: Reward) => reward.status === REWARD_STATUS.RECEIVED)
-    .filter(Boolean).length;
+  const receivedCount = project.rewards.filter(
+    (reward: Reward) => reward.status === REWARD_STATUS.RECEIVED
+  ).length;
 
   const progress = Math.ceil((receivedCount / project.rewards.length) * 100);
 
