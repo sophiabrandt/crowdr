@@ -2,7 +2,7 @@ import { cookies } from 'next/dist/client/components/headers';
 import { db } from '@/lib/db';
 import { getUserFromCookie } from './auth';
 import { UserWithProjects } from '@/helpers/user';
-import { REWARD_STATUS, Reward } from '@prisma/client';
+import { REWARD_STATUS } from '@prisma/client';
 
 export const getUser = async () => {
   return await getUserFromCookie({
