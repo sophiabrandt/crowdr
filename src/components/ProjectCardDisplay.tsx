@@ -11,8 +11,10 @@ export const ProjectCardDisplay = ({ project }: ProjectCardDisplayProps) => {
   const receivedCount = project.rewards.filter(
     (reward: Reward) => reward.status === REWARD_STATUS.RECEIVED
   ).length;
+  const rewardsCount = project.rewards.length;
 
-  const progress = Math.ceil((receivedCount / project.rewards.length) * 100);
+  const progress =
+    rewardsCount > 0 ? Math.ceil((receivedCount / rewardsCount) * 100) : 0;
 
   return (
     <Card className="!px-6 !py-8 transition-all duration-200 ease-in-out hover:-translate-y-1 hover:shadow-2xl">
