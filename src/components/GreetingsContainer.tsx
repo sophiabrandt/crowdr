@@ -11,6 +11,5 @@ export const GreetingsContainer = async () => {
         err instanceof Error ? err.message : JSON.stringify(err)
       }`
     );
-    return null;
   }
 };
