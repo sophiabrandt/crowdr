@@ -7,6 +7,7 @@ import { Suspense } from 'react';
 import { RewardCardContainer } from '@/components/RewardCardContainer';
 import { getUserProjectIds } from '@/lib/get-data';
 import { RewardCardSkeleton } from '@/components/RewardCardSkeleton';
+import NewProject from '@/components/NewProject';
 
 const Page = async () => {
   const projectIds = await getUserProjectIds();
@@ -30,7 +31,9 @@ const Page = async () => {
                 </Link>
               </div>
             ))}
-          <div className="w-1/3 p-3">{/* new project here */}</div>
+          <div className="p-2">
+            <NewProject />
+          </div>
         </div>
         <div className="mt-3">
           <Suspense fallback={<RewardCardSkeleton />}>
