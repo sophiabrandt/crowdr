@@ -5,9 +5,11 @@ import { Button } from './Button';
 import { Input } from './Input';
 import { Modal, useModal } from './Modal';
 import { useRouter } from 'next/navigation';
+import { Alert, useAlert } from './Alert';
 
 const NewProject = () => {
   const { isOpen, setIsOpen } = useModal();
+  const { alertDialog, setAlertDialog } = useAlert();
   const [saving, setSaving] = useState(false);
   const [name, setName] = useState('');
   const { refresh } = useRouter();
@@ -22,8 +24,15 @@ const NewProject = () => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSaving(true);
-    await createNewProject(name);
-    reset();
+    try {
+      await createNewProject(name);
+    } catch (err) {
+      const message =
+        err instanceof Error ? `${err.message}` : 'Could not perform action';
+      setAlertDialog({ isOpen: true, message });
+    } finally {
+      reset();
+    }
   };
 
   return (
@@ -50,7 +59,8 @@ const NewProject = () => {
             </fieldset>
           </form>
         </Modal>
-      )}{' '}
+      )}
+      {alertDialog.isOpen && <Alert message={alertDialog.message} />}
     </div>
   );
 };

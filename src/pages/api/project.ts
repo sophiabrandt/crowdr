@@ -8,17 +8,21 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (!cookie) {
     return res.status(403).json({ message: 'Not authorized' });
   }
-
   const { payload } = await validateJWT(cookie);
 
-  await db.project.create({
-    data: {
-      name: req.body.name,
-      ownerId: payload.id,
-    },
-  });
-
-  return res.json({ data: { message: 'ok' } });
+  try {
+    await db.project.create({
+      data: {
+        name: req.body.name,
+        ownerId: payload.id,
+      },
+    });
+    return res.json({ data: { message: 'ok' } });
+  } catch (err) {
+    const message =
+      err instanceof Error ? `${err.message}` : 'Could not perform action';
+    return res.status(500).json({ message });
+  }
 };
 
 export default handler;
