@@ -121,9 +121,9 @@ export const useAuthForm = (
       try {
         await action(formState);
         router.replace('/home');
-      } catch (e) {
+      } catch (err) {
         const message =
-          e instanceof Error ? `${e.message}` : 'Could not perform action';
+          err instanceof Error ? `${err.message}` : 'Could not perform action';
         setAlertDialog({ isOpen: true, message });
         setError(message);
       } finally {
