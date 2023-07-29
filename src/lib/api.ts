@@ -1,5 +1,3 @@
-import type { User } from '@prisma/client';
-
 export const fetcher = async ({
   url,
   method,
@@ -21,7 +19,9 @@ export const fetcher = async ({
   });
 
   if (!res.ok) {
-    throw new Error(`API Error: ${res.status} ${res.statusText}`);
+    const text = await res.text();
+    const responseMessage = JSON.parse(text);
+    throw new Error(`API Error: ${res.status} ${responseMessage.message}`);
   }
 
   if (json) {
