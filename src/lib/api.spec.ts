@@ -151,7 +151,7 @@ describe('API methods', () => {
       rewardDetails.name,
       rewardDetails.description,
       rewardDetails.expected_due,
-      rewardDetails.projectId,
+      rewardDetails.projectId
     );
 
     expect(fetch).toHaveBeenCalledWith('/api/reward', {

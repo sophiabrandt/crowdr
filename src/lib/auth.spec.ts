@@ -6,6 +6,7 @@ import {
   httpMethod,
   isJWTVerifyPayload,
   getUserFromCookie,
+  validateCookie,
 } from './auth';
 import bcrypt from 'bcrypt';
 import { NextApiRequest, NextApiResponse } from 'next';
@@ -177,5 +178,24 @@ describe('Authentication utilities', () => {
 
     wrappedHandler(assertType<NextApiRequest>({ ...req, method: 'POST' }), res);
     expect(res.status).toBeCalledWith(405);
+  });
+
+  it('should validate the cookie correctly', () => {
+    const cookieName = accessEnv('COOKIE_NAME');
+    const req = assertType<NextApiRequest>({
+      cookies: {
+        [cookieName]: 'testCookieValue',
+      },
+    });
+
+    expect(validateCookie(req)).toEqual('testCookieValue');
+  });
+
+  it('should throw an error if the cookie does not exist', () => {
+    const req = assertType<NextApiRequest>({
+      cookies: {},
+    });
+
+    expect(() => validateCookie(req)).toThrowError(new Error('Not authorized'));
   });
 });
