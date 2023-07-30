@@ -1,6 +1,6 @@
 import { Prisma } from '@prisma/client';
 
-export const projectWithRewards = Prisma.validator<Prisma.ProjectArgs>()({
+const projectWithRewards = Prisma.validator<Prisma.ProjectArgs>()({
   include: { rewards: true },
 });
 
