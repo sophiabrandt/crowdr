@@ -25,4 +25,10 @@ describe('ProjectCardDisplay', () => {
     const progress = Math.ceil((2 / mockProject.rewards.length) * 100);
     expect(screen.getByText(`${progress}%`)).toBeInTheDocument();
   });
+
+  it('shows 0 progress when there are no rewards', () => {
+    render(<ProjectCardDisplay project={{ ...mockProject, rewards: [] }} />);
+    expect(screen.getByText('0/0 received')).toBeInTheDocument();
+    expect(screen.getByText('0%')).toBeInTheDocument();
+  })
 });

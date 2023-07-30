@@ -1,5 +1,5 @@
 import { assertType } from '@/helpers/utils';
-import { fetcher, register, signin } from './api';
+import { addReward, createNewProject, fetcher, register, signin } from './api';
 
 global.fetch = jest.fn();
 
@@ -113,5 +113,54 @@ describe('API methods', () => {
     });
 
     expect(register(user)).rejects.toThrow('API Error: 404 we have an error');
+  });
+
+  it('should create a new project', async () => {
+    const projectName = 'Test Project';
+    assertType<jest.Mock>(fetch).mockResolvedValueOnce({
+      ok: true,
+      json: () => Promise.resolve(),
+    });
+
+    await createNewProject(projectName);
+
+    expect(fetch).toHaveBeenCalledWith('/api/project', {
+      method: 'POST',
+      body: JSON.stringify({ name: projectName }),
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    });
+  });
+
+  it('should add a reward', async () => {
+    const rewardDetails = {
+      name: 'Reward 1',
+      description: 'Reward 1 description',
+      expected_due: '2023-08-31',
+      projectId: 'test-project-id',
+    };
+
+    assertType<jest.Mock>(fetch).mockResolvedValueOnce({
+      ok: true,
+      json: () => Promise.resolve(),
+    });
+
+    await addReward(
+      rewardDetails.name,
+      rewardDetails.description,
+      rewardDetails.expected_due,
+      rewardDetails.projectId,
+    );
+
+    expect(fetch).toHaveBeenCalledWith('/api/reward', {
+      method: 'POST',
+      body: JSON.stringify(rewardDetails),
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    });
   });
 });

@@ -46,22 +46,34 @@ describe('NewProject', () => {
     );
   });
 
-  it('handles project creation error', async () => {
-    assertType<jest.Mock>(createNewProject).mockRejectedValue(
-      new Error('Could not create project')
-    );
+  const testCases = [
+    ['API error instance', new Error('mock error'), 'mock error'],
+    [
+      'not an error instance',
+      'not an error instance',
+      'Could not perform action',
+    ],
+  ];
 
-    render(<NewProject />);
-    userEvent.click(screen.getByText('+ New Project'));
-    const input = await screen.findByRole('textbox');
-    await userEvent.type(input, 'Test Project');
-    userEvent.click(screen.getByText('Create'));
+  it.each(testCases)(
+    'handles error situations properly - %s',
+    async (_desc, errorToThrow, expectedMessage) => {
+      assertType<jest.Mock>(createNewProject).mockImplementationOnce(() => {
+        throw errorToThrow;
+      });
 
-    await waitFor(() =>
-      expect(setAlertDialog).toHaveBeenCalledWith({
-        isOpen: true,
-        message: 'Could not create project',
-      })
-    );
-  });
+      render(<NewProject />);
+      userEvent.click(screen.getByText('+ New Project'));
+      const input = await screen.findByRole('textbox');
+      await userEvent.type(input, 'Test Project');
+      userEvent.click(screen.getByText('Create'));
+
+      await waitFor(() =>
+        expect(setAlertDialog).toHaveBeenCalledWith({
+          isOpen: true,
+          message: expectedMessage,
+        })
+      );
+    }
+  );
 });
