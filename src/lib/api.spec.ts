@@ -106,8 +106,12 @@ describe('API methods', () => {
     assertType<jest.Mock>(fetch).mockResolvedValueOnce({
       ok: false,
       json: () => Promise.resolve(),
+      text: jest
+        .fn()
+        .mockResolvedValue(JSON.stringify({ message: 'we have an error' })),
+      status: 404,
     });
 
-    expect(register(user)).rejects.toThrow('API Error');
+    expect(register(user)).rejects.toThrow('API Error: 404 we have an error');
   });
 });
