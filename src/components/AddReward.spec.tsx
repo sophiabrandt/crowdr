@@ -36,4 +36,3 @@ describe('AddReward', () => {
     expect(setIsOpenMock).toHaveBeenCalledWith(true);
   });
 });
-

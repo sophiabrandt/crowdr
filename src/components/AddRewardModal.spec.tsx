@@ -17,7 +17,7 @@ describe('AddRewardModal', () => {
     const setIsOpen = jest.fn();
     const setAlertDialog = jest.fn();
     const refresh = jest.fn();
-    assertType<jest.Mock>(useRouter).mockReturnValue({ refresh })
+    assertType<jest.Mock>(useRouter).mockReturnValue({ refresh });
 
     render(
       <AddRewardModal
@@ -27,7 +27,7 @@ describe('AddRewardModal', () => {
       />
     );
 
-    const nameInput = screen.getByPlaceholderText('reward name')
+    const nameInput = screen.getByPlaceholderText('reward name');
     const descriptionInput = screen.getByPlaceholderText('reward description');
     const dueDateInput = screen.getByPlaceholderText('reward due date');
 
@@ -37,8 +37,9 @@ describe('AddRewardModal', () => {
 
     userEvent.click(
       screen.getByRole('button', {
-        name: /add/i
-      }))
+        name: /add/i,
+      })
+    );
 
     await waitFor(() => expect(setIsOpen).toHaveBeenCalled());
 
@@ -53,7 +54,11 @@ describe('AddRewardModal', () => {
 
   const testCases = [
     ['API error instance', new Error('mock error'), 'mock error'],
-    ['not an error instance', 'not an error instance', 'Could not perform action']
+    [
+      'not an error instance',
+      'not an error instance',
+      'Could not perform action',
+    ],
   ];
 
   it.each(testCases)(
@@ -74,7 +79,8 @@ describe('AddRewardModal', () => {
       );
 
       const nameInput = screen.getByPlaceholderText('reward name');
-      const descriptionInput = screen.getByPlaceholderText('reward description');
+      const descriptionInput =
+        screen.getByPlaceholderText('reward description');
       const dueDateInput = screen.getByPlaceholderText('reward due date');
 
       await userEvent.type(nameInput, 'Test Reward');
@@ -83,18 +89,18 @@ describe('AddRewardModal', () => {
 
       userEvent.click(
         screen.getByRole('button', {
-          name: /add/i
-        }));
+          name: /add/i,
+        })
+      );
 
       await waitFor(() => expect(setIsOpen).toHaveBeenCalled());
 
       await waitFor(() => {
         expect(setAlertDialog).toHaveBeenCalledWith({
           isOpen: true,
-          message: expectedMessage
+          message: expectedMessage,
         });
       });
     }
   );
 });
-

@@ -30,5 +30,5 @@ describe('ProjectCardDisplay', () => {
     render(<ProjectCardDisplay project={{ ...mockProject, rewards: [] }} />);
     expect(screen.getByText('0/0 received')).toBeInTheDocument();
     expect(screen.getByText('0%')).toBeInTheDocument();
-  })
+  });
 });

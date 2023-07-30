@@ -29,7 +29,7 @@ export const AddRewardModal = ({
     setIsOpen(false);
     setSaving(false);
     refresh();
-  }, [refresh]);
+  }, [refresh, setIsOpen]);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();

@@ -28,11 +28,5 @@ export const RewardCardContainer = async ({
   const rewards = (await fetchRewards(project)) ?? [];
 
   const title = project ? project.name : 'My rewards';
-  return (
-    <RewardCard
-      title={title}
-      rewards={rewards}
-      projectId={project?.id}
-    />
-  );
+  return <RewardCard title={title} rewards={rewards} projectId={project?.id} />;
 };

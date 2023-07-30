@@ -20,7 +20,6 @@ describe('AddRewardForm', () => {
 
     userEvent.click(screen.getByRole('button', { name: /add/i }));
 
-    await waitFor(() => expect(handleSubmit).toHaveBeenCalled())
+    await waitFor(() => expect(handleSubmit).toHaveBeenCalled());
   });
 });
-

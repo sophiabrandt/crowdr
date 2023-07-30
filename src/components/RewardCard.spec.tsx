@@ -50,11 +50,9 @@ describe('RewardCard component', () => {
   it('does not show add reward button if there is no projetId', () => {
     const mockRewards: any[] = [];
 
-    render(
-      <RewardCard rewards={mockRewards} title="my title" />
-    );
+    render(<RewardCard rewards={mockRewards} title="my title" />);
     expect(
       screen.queryByRole('button', { name: /\+ add new/i })
     ).not.toBeInTheDocument();
-  })
+  });
 });
