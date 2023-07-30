@@ -74,6 +74,7 @@ export const AuthFormDisplay = ({
             name="Password"
             placeholder="Password"
             required={true}
+            minLength={8}
             value={formState.password}
             type="password"
             className="border-gray w-full rounded-3xl border-2 border-solid px-6 py-2 text-lg"

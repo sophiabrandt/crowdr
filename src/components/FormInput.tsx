@@ -6,9 +6,10 @@ interface FormInputProps {
   placeholder: string;
   value: string;
   className: string;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   type?: string;
   required?: boolean;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  minLength?: number;
 }
 
 export const FormInput = ({
@@ -17,14 +18,16 @@ export const FormInput = ({
   value,
   className,
   type = 'text',
-  required = false,
   onChange,
+  required = false,
+  minLength,
 }: FormInputProps) => (
   <>
     <div className="text-lg text-black/50">{name}</div>
     <Input
       name={name.toLocaleLowerCase()}
       required={required}
+      minLength={minLength}
       type={type}
       placeholder={placeholder}
       value={value}

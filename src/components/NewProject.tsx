@@ -1,6 +1,6 @@
 'use client';
 import { createNewProject } from '@/lib/api';
-import { FormEvent, useState, useEffect } from 'react';
+import { FormEvent, useState, useEffect, useCallback } from 'react';
 import { Button } from './Button';
 import { Input } from './Input';
 import { Modal, useModal } from './Modal';
@@ -14,17 +14,17 @@ export const NewProject = () => {
   const [name, setName] = useState('');
   const { refresh } = useRouter();
 
+  const reset = useCallback(() => {
+    setSaving(false);
+    setName('');
+    refresh();
+  }, [refresh]);
+
   useEffect(() => {
     if (!isOpen) {
       reset();
     }
-  }, [isOpen]);
-
-  const reset = () => {
-    setSaving(false);
-    setName('');
-    refresh();
-  };
+  }, [isOpen, reset]);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
