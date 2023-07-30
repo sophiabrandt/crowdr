@@ -1,6 +1,6 @@
 'use client';
 import { createNewProject } from '@/lib/api';
-import { FormEvent, useState, useEffect, useCallback } from 'react';
+import { FormEvent, useState, useCallback } from 'react';
 import { Button } from './Button';
 import { Input } from './Input';
 import { Modal, useModal } from './Modal';
@@ -15,16 +15,11 @@ export const NewProject = () => {
   const { refresh } = useRouter();
 
   const reset = useCallback(() => {
+    setIsOpen(false);
     setSaving(false);
     setName('');
     refresh();
-  }, [refresh]);
-
-  useEffect(() => {
-    if (!isOpen) {
-      reset();
-    }
-  }, [isOpen, reset]);
+  }, [refresh, setIsOpen]);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -35,6 +30,8 @@ export const NewProject = () => {
       const message =
         err instanceof Error ? `${err.message}` : 'Could not perform action';
       setAlertDialog({ isOpen: true, message });
+    } finally {
+      reset();
     }
   };
 

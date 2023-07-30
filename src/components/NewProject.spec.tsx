@@ -10,7 +10,7 @@ jest.mock('@/lib/api');
 jest.mock('next/navigation', () => ({ useRouter: jest.fn() }));
 jest.mock('./Alert', () => ({ useAlert: jest.fn() }));
 
-describe('NewProject Component', () => {
+describe('NewProject', () => {
   const setAlertDialog = jest.fn();
 
   beforeEach(() => {
