@@ -10,12 +10,19 @@ export const useModal = () => {
   };
 };
 
-export const Modal = ({ children }: { children: React.ReactNode }) => {
+export const Modal = ({
+  description,
+  children,
+}: {
+  description: string;
+  children: React.ReactNode;
+}) => {
   const modal = (
     <div className="fixed inset-0 h-screen w-screen bg-gray-900 bg-opacity-60">
       <dialog
+        role="dialog"
+        aria-label={description}
         open
-        onClick={close}
         className="fixed left-0 top-[40%] z-40 mt-8 block bg-transparent"
       >
         <div className="relative mx-auto w-96 max-w-lg rounded-2xl bg-white p-6 shadow-lg">
