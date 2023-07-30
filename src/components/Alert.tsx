@@ -31,7 +31,6 @@ export const Alert = ({ message }: AlertProps) => {
     <dialog
       open
       role="alert"
-      onClick={close}
       className="fixed left-0 top-0 z-50 mt-8 block bg-transparent"
     >
       <div className="relative mx-auto w-96 max-w-lg rounded bg-white shadow-lg">
