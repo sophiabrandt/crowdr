@@ -3,7 +3,7 @@ import { Alert } from './Alert';
 import { AuthModeContent } from '@/helpers/auth-modes';
 import { Button } from './Button';
 import { Card } from './Card';
-import { FormInput } from './FormInput';
+import { AuthFormInput } from './AuthFormInput';
 import React, { FormEventHandler } from 'react';
 import { ActionTypes, FormState } from '@/helpers/use-auth-form';
 import { register, signin } from '@/lib/api';
@@ -40,7 +40,7 @@ export const AuthFormDisplay = ({
           {action === register && (
             <div className="mb-8 flex justify-between">
               <div className="pr-2">
-                <FormInput
+                <AuthFormInput
                   name="First Name"
                   placeholder="First Name"
                   value={formState.firstName}
@@ -50,7 +50,7 @@ export const AuthFormDisplay = ({
                 />
               </div>
               <div className="pl-2">
-                <FormInput
+                <AuthFormInput
                   name="Last Name"
                   placeholder="Last Name"
                   required={true}
@@ -61,7 +61,7 @@ export const AuthFormDisplay = ({
               </div>
             </div>
           )}
-          <FormInput
+          <AuthFormInput
             name="Email"
             placeholder="Email"
             required={true}
@@ -70,7 +70,7 @@ export const AuthFormDisplay = ({
             className="border-gray w-full rounded-3xl border-2 border-solid px-6 py-2 text-lg"
             onChange={handleChange(ActionTypes.SetEmail)}
           />
-          <FormInput
+          <AuthFormInput
             name="Password"
             placeholder="Password"
             required={true}

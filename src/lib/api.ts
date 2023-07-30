@@ -1,3 +1,5 @@
+import { User } from '@prisma/client';
+
 export const fetcher = async ({
   url,
   method,
@@ -53,6 +55,20 @@ export const createNewProject = (name: string) => {
     url: '/api/project',
     method: 'POST',
     body: { name },
+    json: false,
+  });
+};
+
+export const addReward = (
+  name: string,
+  description: string,
+  expected_due: string,
+  projectId: string
+) => {
+  return fetcher({
+    url: '/api/reward',
+    method: 'POST',
+    body: { name, description, expected_due, projectId },
     json: false,
   });
 };

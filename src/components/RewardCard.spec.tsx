@@ -1,10 +1,10 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { RewardCardDisplay } from './RewardCardDisplay';
+import { RewardCard } from './RewardCard';
 import { Reward } from '@prisma/client';
 import { assertType } from '@/helpers/utils';
 
-describe('RewardCardDisplay component', () => {
+describe('RewardCard component', () => {
   it('renders rewards correctly', () => {
     const mockRewards: Reward[] = [
       assertType<Reward>({
@@ -21,7 +21,7 @@ describe('RewardCardDisplay component', () => {
       }),
     ];
 
-    render(<RewardCardDisplay rewards={mockRewards} title="My title" />);
+    render(<RewardCard rewards={mockRewards} title="My title" />);
     mockRewards.forEach((reward) => {
       expect(screen.getByText(reward.name)).toBeInTheDocument();
       expect(screen.getByText(reward.description)).toBeInTheDocument();
@@ -32,9 +32,29 @@ describe('RewardCardDisplay component', () => {
   it('renders fallback text when there are no rewards', () => {
     const mockRewards: any[] = [];
 
-    render(<RewardCardDisplay rewards={mockRewards} title="" />);
+    render(<RewardCard rewards={mockRewards} title="" />);
+    expect(screen.getByText('Sorry, no rewards yet')).toBeInTheDocument();
+  });
+
+  it('shows the add reward button if there is a projetId', () => {
+    const mockRewards: any[] = [];
+
+    render(
+      <RewardCard rewards={mockRewards} title="my title" projectId="test-id" />
+    );
     expect(
-      screen.getByText('You have added no projects with rewards yet')
+      screen.getByRole('button', { name: /\+ add new/i })
     ).toBeInTheDocument();
   });
+
+  it('does not show add reward button if there is no projetId', () => {
+    const mockRewards: any[] = [];
+
+    render(
+      <RewardCard rewards={mockRewards} title="my title" />
+    );
+    expect(
+      screen.queryByRole('button', { name: /\+ add new/i })
+    ).not.toBeInTheDocument();
+  })
 });

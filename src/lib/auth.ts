@@ -115,3 +115,9 @@ export const httpMethod =
     }
     return handler(req, res);
   };
+
+export const validateCookie = (req: NextApiRequest) => {
+  const cookie = req.cookies[accessEnv('COOKIE_NAME')];
+  if (!cookie) throw new Error('Not authorized');
+  return cookie;
+};

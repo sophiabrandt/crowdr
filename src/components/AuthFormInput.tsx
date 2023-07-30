@@ -1,7 +1,7 @@
 import { ChangeEvent } from 'react';
 import { Input } from './Input';
 
-interface FormInputProps {
+interface AuthFormInputProps {
   name: string;
   placeholder: string;
   value: string;
@@ -12,7 +12,7 @@ interface FormInputProps {
   minLength?: number;
 }
 
-export const FormInput = ({
+export const AuthFormInput = ({
   name,
   placeholder,
   value,
@@ -21,7 +21,7 @@ export const FormInput = ({
   onChange,
   required = false,
   minLength,
-}: FormInputProps) => (
+}: AuthFormInputProps) => (
   <>
     <div className="text-lg text-black/50">{name}</div>
     <Input

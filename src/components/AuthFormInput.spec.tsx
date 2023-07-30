@@ -1,12 +1,12 @@
 import { screen, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { FormInput } from './FormInput';
+import { AuthFormInput } from './AuthFormInput';
 
-describe('FormInput', () => {
-  it('should render FormInput component', () => {
+describe('AuthFormInput', () => {
+  it('should render AuthFormInput component', () => {
     const handleChange = jest.fn();
     const { getByPlaceholderText } = render(
-      <FormInput
+      <AuthFormInput
         name="TestName"
         placeholder="TestPlaceholder"
         value=""
@@ -24,7 +24,7 @@ describe('FormInput', () => {
     const handleChange = jest.fn();
 
     render(
-      <FormInput
+      <AuthFormInput
         name="TestName"
         placeholder="TestPlaceholder"
         value=""

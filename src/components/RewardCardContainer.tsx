@@ -1,5 +1,5 @@
 import { getRewards } from '@/lib/get-data';
-import { RewardCardDisplay } from './RewardCardDisplay';
+import { RewardCard } from './RewardCard';
 import { ProjectWithRewards } from '@/helpers/project';
 
 interface RewardCardContainerProps {
@@ -28,5 +28,11 @@ export const RewardCardContainer = async ({
   const rewards = (await fetchRewards(project)) ?? [];
 
   const title = project ? project.name : 'My rewards';
-  return <RewardCardDisplay title={title} rewards={rewards} />;
+  return (
+    <RewardCard
+      title={title}
+      rewards={rewards}
+      projectId={project?.id}
+    />
+  );
 };
