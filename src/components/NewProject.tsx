@@ -1,21 +1,26 @@
 'use client';
 import { createNewProject } from '@/lib/api';
-import { FormEvent, useState } from 'react';
+import { FormEvent, useState, useEffect } from 'react';
 import { Button } from './Button';
 import { Input } from './Input';
 import { Modal, useModal } from './Modal';
-import { useRouter } from 'next/navigation';
 import { Alert, useAlert } from './Alert';
+import { useRouter } from 'next/navigation';
 
-const NewProject = () => {
+export const NewProject = () => {
   const { isOpen, setIsOpen } = useModal();
   const { alertDialog, setAlertDialog } = useAlert();
   const [saving, setSaving] = useState(false);
   const [name, setName] = useState('');
   const { refresh } = useRouter();
 
+  useEffect(() => {
+    if (!isOpen) {
+      reset();
+    }
+  }, [isOpen]);
+
   const reset = () => {
-    setIsOpen(false);
     setSaving(false);
     setName('');
     refresh();
@@ -30,8 +35,6 @@ const NewProject = () => {
       const message =
         err instanceof Error ? `${err.message}` : 'Could not perform action';
       setAlertDialog({ isOpen: true, message });
-    } finally {
-      reset();
     }
   };
 
@@ -39,7 +42,7 @@ const NewProject = () => {
     <div className="flex items-center justify-center px-6 py-8 transition-all duration-200 ease-in-out hover:scale-105">
       <Button onClick={() => setIsOpen(true)}>+ New Project</Button>
       {isOpen && (
-        <Modal>
+        <Modal description="create new project">
           <h1 className="mb-6 text-3xl">New Project</h1>
           <form onSubmit={handleSubmit}>
             <fieldset
@@ -64,5 +67,3 @@ const NewProject = () => {
     </div>
   );
 };
-
-export default NewProject;

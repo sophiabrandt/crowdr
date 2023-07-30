@@ -7,7 +7,7 @@ import { Suspense } from 'react';
 import { RewardCardContainer } from '@/components/RewardCardContainer';
 import { getUserProjectIds } from '@/lib/get-data';
 import { RewardCardSkeleton } from '@/components/RewardCardSkeleton';
-import NewProject from '@/components/NewProject';
+import { NewProject } from '@/components/NewProject';
 
 const Page = async () => {
   const projectIds = await getUserProjectIds();
