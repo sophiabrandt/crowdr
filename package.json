@@ -9,7 +9,8 @@
     "lint": "next lint",
     "test:watch": "jest --watch",
     "test": "jest",
-    "format": "prettier -u -w --ignore-path .gitignore \"**/*.{ts,tsx,js,mjs,css,html}\""
+    "format": "prettier -u -w --ignore-path .gitignore \"**/*.{ts,tsx,js,mjs,css,html}\"",
+    "postinstall": "prisma generate"
   },
   "prisma": {
     "seed": "ts-node -P tsconfig-seed.json -r tsconfig-paths/register --transpileOnly prisma/seed.ts"
