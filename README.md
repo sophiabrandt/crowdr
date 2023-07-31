@@ -17,6 +17,7 @@ I found the original inspiration in the [FrontendMasters Next.js course by Scott
 
 Some of the changes include:
 
+- strict type checking (TypeScript)
 - architecture changes & refactoring
 - unit testing with [jest](https://jestjs.io) & [testing library](https://testing-library.com/)
 - parallel data fetching for the home page with Suspense boundaries
