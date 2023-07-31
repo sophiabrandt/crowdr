@@ -27,6 +27,22 @@ Some of the changes include:
 
 The logo comes from [undraw](https://undraw.co/). 🩷
 
+## Demo ✨
+
+You can check a running demo on [Vercel](https://crowdr-nextjs.vercel.app/signin).
+
+Example User:
+
+```bash
+user@email.com
+```
+
+Example Password:
+
+```bash
+password12345
+```
+
 ## Getting Started
 
 ### Prerequisites
