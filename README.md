@@ -85,3 +85,7 @@ This project uses Jest for testing. To run the tests:
 ```bash
 pnpm test
 ```
+
+## Deployment
+
+Please check the [Deployment instructions](/deployment.md).
