@@ -9,9 +9,20 @@
 
 The idea behind crowdr is to serve as a Next.js playground to explore the new Next.js 13 features.
 
-crowdr is a tool for tracking, managing, and viewing crowdfunding projects that users have supported. The application is built using [Next.js](https://nextjs.org) and [Prisma](https://www.prisma.io/). It provides an array of features such as project submission, project management, reward management, and search & filtering.
+crowdr is a tool for tracking, managing, and viewing crowdfunding projects that users have supported. The application is built using [Next.js](https://nextjs.org) and [Prisma](https://www.prisma.io/).
+
+⚠ _crowdr is a proof of concept._
 
 I found the original inspiration in the [FrontendMasters Next.js course by Scott Moss](https://frontendmasters.com/courses/fullstack-app-next-v2/dashboard-home-page/), but I significantly rewrote the code and changed the architeture to allow for testing.
+
+Some of the changes include:
+
+- architecture changes & refactoring
+- unit testing with [jest](https://jestjs.io) & [testing library](https://testing-library.com/)
+- parallel data fetching for the home page with Suspense boundaries
+- Alert & Modal Dialogs without external dependencies
+- ability to add a reward to a project
+- bug fixes and minimally adjusted styling
 
 The logo comes from [undraw](https://undraw.co/). 🩷
 
