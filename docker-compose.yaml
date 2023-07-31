@@ -4,12 +4,12 @@ services:
       context: ./prisma
       dockerfile: Dockerfile
     ports:
-      - 5432:5432
+      - 33306:3306
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      - MYSQL_DATABASE=crowdr
+      - MYSQL_ROOT_PASSWORD=root
     volumes:
-      - db-data:/var/lib/postgresql/data:delegated
+      - db-data:/var/lib/mysql:delegated
 
 volumes:
   db-data:

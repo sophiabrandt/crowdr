@@ -70,6 +70,12 @@ Run migrations:
 pnpm exec prisma migrate dev
 ```
 
+Seed:
+
+```bash
+pnpm exec prisma db seed
+```
+
 Finally, you can start the development server:
 
 ```bash
@@ -85,7 +91,3 @@ This project uses Jest for testing. To run the tests:
 ```bash
 pnpm test
 ```
-
-## Deployment
-
-Please check the [Deployment instructions](/deployment.md).

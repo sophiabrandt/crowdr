@@ -20,7 +20,7 @@ const main = async () => {
       email: 'user@email.com',
       firstName: 'User',
       lastName: 'Person',
-      password: await hashPassword('password'),
+      password: await hashPassword('password12345'),
       projects: {
         create: new Array(5).fill(1).map((_, i) => ({
           name: `Project ${i}`,
