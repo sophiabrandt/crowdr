@@ -11,21 +11,21 @@ export const NewProject = () => {
   const { isOpen, setIsOpen } = useModal();
   const { alertDialog, setAlertDialog } = useAlert();
   const [saving, setSaving] = useState(false);
-  const [name, setName] = useState('');
   const { refresh } = useRouter();
 
   const reset = useCallback(() => {
     setIsOpen(false);
     setSaving(false);
-    setName('');
     refresh();
   }, [refresh, setIsOpen]);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSaving(true);
+    const { name } = Object.fromEntries(new FormData(e.currentTarget));
+
     try {
-      await createNewProject(name);
+      await createNewProject(String(name));
     } catch (err) {
       const message =
         err instanceof Error ? `${err.message}` : 'Could not perform action';
@@ -48,12 +48,9 @@ export const NewProject = () => {
             >
               <Input
                 placeholder="project name"
-                name="Project Name"
+                name="name"
                 required={true}
-                value={name}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setName(e.target.value)
-                }
+                defaultValue=""
               />
               <Button type="submit">Create</Button>
             </fieldset>

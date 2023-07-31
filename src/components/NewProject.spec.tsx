@@ -27,6 +27,9 @@ describe('NewProject', () => {
   });
 
   it('creates a new project successfully', async () => {
+    const refresh = jest.fn();
+    assertType<jest.Mock>(useRouter).mockReturnValue({ refresh });
+
     render(<NewProject />);
 
     userEvent.click(
@@ -44,6 +47,8 @@ describe('NewProject', () => {
     await waitFor(() =>
       expect(createNewProject).toHaveBeenCalledWith('Test Project')
     );
+
+    expect(refresh).toHaveBeenCalled();
   });
 
   const testCases = [
