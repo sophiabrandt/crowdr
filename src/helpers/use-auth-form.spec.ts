@@ -35,7 +35,6 @@ const initialState: FormState = {
   password: '',
   firstName: '',
   lastName: '',
-  error: '',
   loading: false,
 };
 
@@ -113,16 +112,6 @@ describe('useAuthFormState', () => {
     expect(result.current.formState.loading).toEqual(false);
   });
 
-  it('handles SetError action correctly', () => {
-    const { result } = renderHook(() => useAuthFormState());
-
-    act(() => {
-      result.current.setError('test error message');
-    });
-
-    expect(result.current.formState.error).toEqual('test error message');
-  });
-
   it('handles form state resetting correctly', () => {
     const { result } = renderHook(() => useAuthFormState());
 
@@ -151,7 +140,7 @@ describe('useAuthForm', () => {
 
   it('handles successful form submission', async () => {
     const { result } = renderHook(() =>
-      useAuthForm(signin, initialState, jest.fn(), jest.fn(), jest.fn())
+      useAuthForm(signin, initialState, jest.fn(), jest.fn())
     );
 
     assertType<jest.Mock>(signin).mockResolvedValue(true);
@@ -170,9 +159,15 @@ describe('useAuthForm', () => {
   });
 
   it('handles unsuccessful form submission', async () => {
-    const setError = jest.fn();
+    const setAlertDialog = jest.fn();
+
+    require('@/components/Alert').useAlert.mockImplementation(() => ({
+      alertDialog: { isOpen: false, message: '' },
+      setAlertDialog,
+    }));
+
     const { result } = renderHook(() =>
-      useAuthForm(signin, initialState, setError, jest.fn(), jest.fn())
+      useAuthForm(signin, initialState, jest.fn(), jest.fn())
     );
 
     const error = new Error('Test Error');
@@ -187,12 +182,14 @@ describe('useAuthForm', () => {
     });
 
     await waitFor(() => {
-      expect(setError).toBeCalledWith('Test Error');
+      expect(setAlertDialog).toBeCalledWith({
+        isOpen: true,
+        message: 'Test Error',
+      });
     });
   });
 
   it('handles non-Error rejection correctly', async () => {
-    const setError = jest.fn();
     const setAlertDialog = jest.fn();
 
     require('@/components/Alert').useAlert.mockImplementation(() => ({
@@ -201,7 +198,7 @@ describe('useAuthForm', () => {
     }));
 
     const { result } = renderHook(() =>
-      useAuthForm(signin, initialState, setError, jest.fn(), jest.fn())
+      useAuthForm(signin, initialState, jest.fn(), jest.fn())
     );
 
     // Throw a non-Error value to simulate a different kind of rejection
@@ -218,7 +215,10 @@ describe('useAuthForm', () => {
     });
 
     await waitFor(() => {
-      expect(setError).toBeCalledWith('Could not perform action');
+      expect(setAlertDialog).toBeCalledWith({
+        isOpen: true,
+        message: 'Could not perform action',
+      });
     });
 
     await waitFor(() => {

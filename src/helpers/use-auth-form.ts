@@ -9,7 +9,6 @@ export interface FormState {
   password: string;
   firstName: string;
   lastName: string;
-  error: string;
   loading: boolean;
 }
 
@@ -18,7 +17,6 @@ const initialState: FormState = {
   password: '',
   firstName: '',
   lastName: '',
-  error: '',
   loading: false,
 };
 
@@ -27,7 +25,6 @@ export enum ActionTypes {
   SetPassword = 'setPassword',
   SetFirstName = 'setFirstName',
   SetLastName = 'setLastName',
-  SetError = 'setError',
   SetLoading = 'setLoading',
   Reset = 'reset',
 }
@@ -37,7 +34,6 @@ export type Action =
   | { type: ActionTypes.SetPassword; payload: string }
   | { type: ActionTypes.SetFirstName; payload: string }
   | { type: ActionTypes.SetLastName; payload: string }
-  | { type: ActionTypes.SetError; payload: string }
   | { type: ActionTypes.SetLoading; payload: boolean }
   | { type: ActionTypes.Reset };
 
@@ -56,8 +52,6 @@ export const formStateReducer = (
       return { ...state, firstName: action.payload };
     case ActionTypes.SetLastName:
       return { ...state, lastName: action.payload };
-    case ActionTypes.SetError:
-      return { ...state, error: action.payload };
     case ActionTypes.SetLoading:
       return { ...state, loading: action.payload };
     case ActionTypes.Reset:
@@ -82,10 +76,6 @@ export const useAuthFormState = () => {
     [dispatch]
   );
 
-  const setError = useCallback((message: string) => {
-    dispatch({ type: ActionTypes.SetError, payload: message });
-  }, []);
-
   const setLoading = useCallback((isLoading: boolean) => {
     dispatch({ type: ActionTypes.SetLoading, payload: isLoading });
   }, []);
@@ -97,7 +87,6 @@ export const useAuthFormState = () => {
   return {
     formState,
     handleChange: handleChangeCallback,
-    setError,
     setLoading,
     resetForm,
   };
@@ -106,7 +95,6 @@ export const useAuthFormState = () => {
 export const useAuthForm = (
   action: typeof signin | typeof register,
   formState: FormState,
-  setError: (message: string) => void,
   setLoading: (isLoading: boolean) => void,
   resetForm: () => void
 ) => {
@@ -125,12 +113,11 @@ export const useAuthForm = (
         const message =
           err instanceof Error ? `${err.message}` : 'Could not perform action';
         setAlertDialog({ isOpen: true, message });
-        setError(message);
       } finally {
         resetForm();
       }
     },
-    [router, resetForm, setError, setLoading, formState, action, setAlertDialog]
+    [router, resetForm, setLoading, formState, action, setAlertDialog]
   );
 
   return { handleSubmit, alertDialog };

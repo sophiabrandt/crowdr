@@ -9,12 +9,10 @@ interface AuthFormContainerProps {
 
 export const AuthFormContainer = ({ mode }: AuthFormContainerProps) => {
   const action = actions[mode.action];
-  const { formState, handleChange, setError, setLoading, resetForm } =
-    useAuthFormState();
+  const { formState, handleChange, setLoading, resetForm } = useAuthFormState();
   const { handleSubmit, alertDialog } = useAuthForm(
     action,
     formState,
-    setError,
     setLoading,
     resetForm
   );
