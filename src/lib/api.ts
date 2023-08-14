@@ -11,25 +11,28 @@ export const fetcher = async ({
   body: any;
   json: boolean;
 }): Promise<any> => {
-  const res = await fetch(url, {
+  const fetchOptions = {
     method,
     body: body && JSON.stringify(body),
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
-  });
+  };
 
-  if (!res.ok) {
-    const text = await res.text();
-    const responseMessage = JSON.parse(text);
-    throw new Error(`API Error: ${res.status} ${responseMessage.message}`);
-  }
-
-  if (json) {
-    const data = await res.json();
-    return data;
-  }
+  return fetch(url, fetchOptions)
+    .then((res) => {
+      if (!res.ok) {
+        return res.text().then((text) => {
+          const responseMessage = JSON.parse(text);
+          throw new Error(
+            `API Error: ${res.status} ${responseMessage.message}`
+          );
+        });
+      }
+      return res;
+    })
+    .then((res) => (json ? res.json() : res));
 };
 
 export const register = async (user: Partial<User>) => {
